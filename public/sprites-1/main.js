@@ -1,5 +1,5 @@
-import { Character } from "/game-animation-sprite-1/character.js";
-import { fpsLimiter } from "/game-animation-sprite-1/utils.js";
+import { Character } from "/sprites-1/character.js";
+import { fpsLimiter } from "/sprites-1/utils.js";
 
 const character = new Character();
 

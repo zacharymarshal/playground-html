@@ -7,7 +7,7 @@ class Character {
     this.ctx = this.canvas.getContext("2d");
 
     this.image = new Image();
-    this.image.src = "/game-animation-sprite-1/character-spritesheet-0.png";
+    this.image.src = "/sprites-1/character-spritesheet-0.png";
     this.image.onload = () => {
       this.imageIsLoaded = true;
     };
