@@ -1,8 +1,10 @@
 class Character {
-  constructor() {
+  constructor(fps = 16) {
+    this.width = 256;
+    this.height = 256;
+
     this.frameTimer = 0;
-    this.fps = 16;
-    this.frameInterval = 1000 / this.fps;
+    this.setFps(fps);
 
     this.canvas = document.querySelector("#character");
     this.ctx = this.canvas.getContext("2d");
@@ -107,8 +109,7 @@ class Character {
   }
 
   setFps(fps) {
-    this.fps = fps;
-    this.frameInterval = 1000 / this.fps;
+    this.frameInterval = 1000 / fps;
   }
 
   update() {}
@@ -118,39 +119,40 @@ class Character {
       return;
     }
 
-    if (this.frameTimer > this.frameInterval) {
-      // Do the drawing!!
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      const frame = this.animations[this.currentAnimation][this.animationFrame];
-      const [fx, fy] = frame;
-
-      this.ctx.drawImage(
-        this.image,
-        fx * 256,
-        fy * 256,
-        256,
-        256,
-        0,
-        0,
-        256,
-        256
-      );
-
-      if (
-        this.animationFrame ===
-        this.animations[this.currentAnimation].length - 1
-      ) {
-        this.animationFrame = 0;
-      } else {
-        this.animationFrame += 1;
-      }
-
-      // Keep to the right fps
-      this.frameTimer = 0;
-    } else {
+    if (this.frameTimer < this.frameInterval) {
       this.frameTimer += dt;
+      return;
     }
+
+    // Do the drawing!!
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const frame = this.animations[this.currentAnimation][this.animationFrame];
+    const [fx, fy] = frame;
+
+    this.ctx.drawImage(
+      this.image,
+      fx * this.width,
+      fy * this.height,
+      this.width,
+      this.height,
+      0,
+      0,
+      this.width,
+      this.height
+    );
+
+    if (
+      this.animationFrame ===
+      this.animations[this.currentAnimation].length - 1
+    ) {
+      this.animationFrame = 0;
+    } else {
+      this.animationFrame += 1;
+    }
+
+    // Keep to the right fps
+    this.frameTimer = 0;
   }
 }
 
