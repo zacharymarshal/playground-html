@@ -1,30 +1,32 @@
 import { Character } from "/game-animation-sprite-1/character.js";
+import { fpsLimiter } from "/game-animation-sprite-1/utils.js";
 
-const c = new Character();
-let prevTs = 0;
-const fpsEl = document.querySelector("#fps");
+const character = new Character();
 
 const inputs = document.querySelectorAll("[name='animations']");
 inputs.forEach((animationsInput) => {
   animationsInput.addEventListener("change", (e) => {
-    c.setAnimation(e.target.value);
-    console.log(e.target.value);
+    character.setAnimation(e.target.value);
   });
 });
 
+let fps = 16;
 const animationFpsEl = document.querySelector("#animation-fps");
 animationFpsEl.addEventListener("change", (e) => {
-  c.setFps(e.target.value);
+  fps = e.target.value;
 });
 
+const fpsEl = document.querySelector("#fps");
+const limitFps = fpsLimiter();
+
+let prevTs = 0;
 function animate(ts) {
-  const delta = ts - prevTs;
+  const deltaTime = ts - prevTs;
   prevTs = ts;
 
-  c.update();
-  c.draw(delta);
+  limitFps(fps, deltaTime, () => character.draw());
 
-  fpsEl.innerHTML = parseInt(1000 / delta);
+  fpsEl.innerHTML = parseInt(1000 / deltaTime);
 
   requestAnimationFrame(animate);
 }

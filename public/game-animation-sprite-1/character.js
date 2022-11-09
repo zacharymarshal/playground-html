@@ -1,10 +1,7 @@
 class Character {
-  constructor(fps = 16) {
+  constructor() {
     this.width = 256;
     this.height = 256;
-
-    this.frameTimer = 0;
-    this.setFps(fps);
 
     this.canvas = document.querySelector("#character");
     this.ctx = this.canvas.getContext("2d");
@@ -108,19 +105,8 @@ class Character {
     this.animationFrame = 0;
   }
 
-  setFps(fps) {
-    this.frameInterval = 1000 / fps;
-  }
-
-  update() {}
-
-  draw(dt) {
+  draw() {
     if (!this.imageIsLoaded) {
-      return;
-    }
-
-    if (this.frameTimer < this.frameInterval) {
-      this.frameTimer += dt;
       return;
     }
 
@@ -150,9 +136,6 @@ class Character {
     } else {
       this.animationFrame += 1;
     }
-
-    // Keep to the right fps
-    this.frameTimer = 0;
   }
 }
 
