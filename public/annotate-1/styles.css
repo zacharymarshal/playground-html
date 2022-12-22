@@ -3,11 +3,28 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.annotate-toolbar {
+  position: fixed;
+  right: 0;
+  margin: 16px;
+  background: #f8f8f8;
+  border-bottom: 1px solid #e2e2e2;
+  padding: 16px;
+  z-index: 99999999;
+}
+
 .draw {
 }
 
-.draw svg {
-  border: 2px solid green;
+svg {
+  /* border: 2px solid green; */
+  pointer-events: none;
+}
+
+svg path {
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .draw button {
