@@ -1,0 +1,28 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+.draw {
+}
+
+.draw svg {
+  border: 2px solid green;
+}
+
+.draw button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.draw-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  cursor: url(tip.png), crosshair;
+  background: rgba(0, 0, 255, 0.3);
+}
