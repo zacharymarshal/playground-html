@@ -2,28 +2,27 @@ const { createElement: e, Fragment, useEffect, useState } = window.React;
 
 const DEFAULT_LENGTH = 50;
 
-function Layer({ coords, posX, posY }) {
-  const [mx, my] = coords[0] || [0, 0];
+function DrawingObject({ coords, posX, posY }) {
+  const [mx, my] = coords[0];
   const pathStr =
-    `M${mx} ${my} ` +
-    coords
-      .slice(1)
-      .map(([cx, cy]) => `L${cx} ${cy}`)
-      .join(" ");
+    `M${mx} ${my} ` + coords.map(([cx, cy]) => `L${cx} ${cy}`).join(" ");
+
   const path = e("path", {
     d: pathStr,
     fill: "none",
     stroke: "#000",
-    strokeWidth: 2,
+    strokeWidth: 5,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
   });
 
-  let minX = coords.reduce((acc, [cx, cy]) => (cx < acc ? cx : acc), 0) - 5;
-  let maxX = coords.reduce((acc, [cx, cy]) => (cx > acc ? cx : acc), 0) + 5;
-  const twidth = Math.max(DEFAULT_LENGTH, maxX) + Math.abs(minX);
+  let minX = coords.reduce((acc, [cx]) => (cx < acc ? cx : acc), 0) - 5;
+  let maxX = coords.reduce((acc, [cx]) => (cx > acc ? cx : acc), 0) + 5;
+  const width = Math.max(DEFAULT_LENGTH, maxX) + Math.abs(minX);
 
-  let minY = coords.reduce((acc, [cx, cy]) => (cy < acc ? cy : acc), 0) - 5;
-  let maxY = coords.reduce((acc, [cx, cy]) => (cy > acc ? cy : acc), 0) + 5;
-  const theight = Math.max(DEFAULT_LENGTH, maxY) + Math.abs(minY);
+  let minY = coords.reduce((acc, [, cy]) => (cy < acc ? cy : acc), 0) - 5;
+  let maxY = coords.reduce((acc, [, cy]) => (cy > acc ? cy : acc), 0) + 5;
+  const height = Math.max(DEFAULT_LENGTH, maxY) + Math.abs(minY);
 
   return e(
     "svg",
@@ -33,10 +32,10 @@ function Layer({ coords, posX, posY }) {
         position: "absolute",
         left: posX + minX,
         top: posY + minY,
-        width: twidth,
-        height: theight,
+        width,
+        height,
       },
-      viewBox: `${minX} ${minY} ${twidth} ${theight}`,
+      viewBox: `${minX} ${minY} ${width} ${height}`,
     },
     path
   );
@@ -46,13 +45,22 @@ function DrawTool({ onDone }) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [posX, setPosX] = useState(0);
   const [posY, setPosY] = useState(0);
-  const [coords, setCoords] = useState([]);
+  const [coords, setCoords] = useState();
+  const [buffer, setBuffer] = useState([]);
+
+  const getMousePosition = (e) => {
+    return {
+      x: e.pageX - posX,
+      y: e.pageY - posY,
+    };
+  };
 
   useEffect(() => {
     const u = () => {
       console.log("mouseup");
       onDone({ coords, posX, posY });
       setIsDrawing(false);
+      setBuffer([]);
     };
     window.addEventListener("mouseup", u);
     return () => {
@@ -63,7 +71,7 @@ function DrawTool({ onDone }) {
   useEffect(() => {
     const d = (e) => {
       e.preventDefault();
-      console.log("mousedown", e);
+      console.log("mousedown");
       setIsDrawing(true);
       setPosX(e.pageX - DEFAULT_LENGTH / 2);
       setPosY(e.pageY - DEFAULT_LENGTH / 2);
@@ -75,7 +83,11 @@ function DrawTool({ onDone }) {
       if (!isDrawing) {
         return;
       }
-      setCoords((c) => [...c, [e.pageX - posX, e.pageY - posY]]);
+
+      const pos = getMousePosition(e);
+      setBuffer((b) => {
+        return [...b, pos].slice(-10);
+      });
     };
     window.addEventListener("mousemove", m);
 
@@ -83,29 +95,45 @@ function DrawTool({ onDone }) {
       window.removeEventListener("mousedown", d);
       window.removeEventListener("mousemove", m);
     };
-  }, [isDrawing, posX, posY]);
+  }, [isDrawing, posX, posY, buffer]);
 
-  const svg = e(Layer, { coords, posX, posY });
+  useEffect(() => {
+    const getAverageCoord = (buffer) => {
+      if (!buffer.length) {
+        return;
+      }
+
+      const totalX = buffer.reduce((acc, { x }) => {
+        acc += x;
+        return acc;
+      }, 0);
+      const totalY = buffer.reduce((acc, { y }) => {
+        acc += y;
+        return acc;
+      }, 0);
+
+      return {
+        x: totalX / buffer.length,
+        y: totalY / buffer.length,
+      };
+    };
+
+    const a = getAverageCoord(buffer);
+    if (a) {
+      setCoords((c) => [...c, [a.x, a.y]]);
+    }
+  }, [buffer]);
+
+  const svg = coords && e(DrawingObject, { coords, posX, posY });
 
   const overlay = e("div", { className: "draw-overlay" });
 
-  return e(
-    Fragment,
-    {},
-    overlay,
-    e(
-      "div",
-      {
-        className: "draw",
-      },
-      svg
-    )
-  );
+  return e(Fragment, {}, overlay, e("div", { className: "draw" }, svg));
 }
 
 function Annotate() {
-  const [layers, setLayers] = useState([]);
-  const [isOn, setIsOn] = useState(false);
+  const [drawingObjects, setDrawingObjects] = useState([]);
+  const [isOn, setIsOn] = useState(true);
 
   const onBtn = e(
     "button",
@@ -115,8 +143,9 @@ function Annotate() {
     isOn ? "OFF" : "ON"
   );
 
-  // TODO: add id for key
-  const layerElements = layers.map((l) => e(Layer, l));
+  const drawingObjectElements = drawingObjects.map((d) => {
+    return e(DrawingObject, { ...d, key: d.id });
+  });
 
   return e(
     Fragment,
@@ -130,13 +159,20 @@ function Annotate() {
     ),
     isOn &&
       e(DrawTool, {
-        onDone(layer) {
-          setLayers((l) => [...l, layer]);
+        onDone(drawingObject) {
+          setDrawingObjects((l) => {
+            const d = {
+              ...drawingObject,
+              id: l.length + 1,
+            };
+            return [...l, d];
+          });
         },
       }),
-    layerElements
+    drawingObjectElements
   );
 }
+
 const domContainer = document.querySelector("#annotate");
 const root = ReactDOM.createRoot(domContainer);
 root.render(e(Annotate));

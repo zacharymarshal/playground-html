@@ -6,6 +6,7 @@ body {
 
 .annotate-toolbar {
   position: fixed;
+  top: 0;
   right: 0;
   margin: 16px;
   background: #f8f8f8;
@@ -40,6 +41,5 @@ svg path {
   width: 100%;
   height: 100%;
   z-index: 9999999;
-  cursor: url(tip.png), crosshair;
-  background: rgba(0, 0, 255, 0.3);
+  cursor: url(tip.png) 3 4, crosshair;
 }
