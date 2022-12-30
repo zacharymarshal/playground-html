@@ -1,11 +1,36 @@
 const { createElement: e, Fragment, useEffect, useState } = window.React;
 
+function getAverageCoord(buffer) {
+  if (!buffer.length) {
+    return;
+  }
+
+  const totalX = buffer.reduce((acc, { x }) => {
+    acc += x;
+    return acc;
+  }, 0);
+  const totalY = buffer.reduce((acc, { y }) => {
+    acc += y;
+    return acc;
+  }, 0);
+
+  return {
+    x: totalX / buffer.length,
+    y: totalY / buffer.length,
+  };
+}
+
 const DEFAULT_LENGTH = 50;
 
 function DrawingObject({ coords, posX, posY }) {
   const [mx, my] = coords[0];
   const pathStr =
-    `M${mx} ${my} ` + coords.map(([cx, cy]) => `L${cx} ${cy}`).join(" ");
+    `M ${mx} ${my} ` +
+    coords
+      .map(([cx, cy]) => {
+        return `L ${cx} ${cy}`;
+      })
+      .join(" ");
 
   const path = e("path", {
     d: pathStr,
@@ -56,9 +81,11 @@ function DrawTool({ onDone }) {
   };
 
   useEffect(() => {
-    const u = () => {
-      console.log("mouseup");
-      onDone({ coords, posX, posY });
+    const u = (e) => {
+      // Save the final mouse position
+      const pos = getMousePosition(e);
+      const doneCoords = [...coords, [pos.x, pos.y]];
+      onDone({ coords: doneCoords, posX, posY });
       setIsDrawing(false);
       setBuffer([]);
     };
@@ -71,7 +98,6 @@ function DrawTool({ onDone }) {
   useEffect(() => {
     const d = (e) => {
       e.preventDefault();
-      console.log("mousedown");
       setIsDrawing(true);
       setPosX(e.pageX - DEFAULT_LENGTH / 2);
       setPosY(e.pageY - DEFAULT_LENGTH / 2);
@@ -84,9 +110,14 @@ function DrawTool({ onDone }) {
         return;
       }
 
-      const pos = getMousePosition(e);
       setBuffer((b) => {
-        return [...b, pos].slice(-10);
+        const pos = getMousePosition(e);
+        // Ignore duplicates
+        const lastPos = b[b.length - 1];
+        if (lastPos && lastPos.x === pos.x && lastPos.y === pos.y) {
+          return b;
+        }
+        return [...b, pos].slice(-12);
       });
     };
     window.addEventListener("mousemove", m);
@@ -98,33 +129,22 @@ function DrawTool({ onDone }) {
   }, [isDrawing, posX, posY, buffer]);
 
   useEffect(() => {
-    const getAverageCoord = (buffer) => {
-      if (!buffer.length) {
-        return;
-      }
-
-      const totalX = buffer.reduce((acc, { x }) => {
-        acc += x;
-        return acc;
-      }, 0);
-      const totalY = buffer.reduce((acc, { y }) => {
-        acc += y;
-        return acc;
-      }, 0);
-
-      return {
-        x: totalX / buffer.length,
-        y: totalY / buffer.length,
-      };
-    };
-
     const a = getAverageCoord(buffer);
     if (a) {
       setCoords((c) => [...c, [a.x, a.y]]);
     }
   }, [buffer]);
 
-  const svg = coords && e(DrawingObject, { coords, posX, posY });
+  let svg;
+  if (coords?.length) {
+    const tmpCoords = [...coords];
+    for (let o = 0; o < buffer.length; o += 2) {
+      const c = getAverageCoord(buffer.slice(o));
+      tmpCoords.push([c.x, c.y]);
+    }
+
+    svg = e(DrawingObject, { coords: tmpCoords, posX, posY });
+  }
 
   const overlay = e("div", { className: "draw-overlay" });
 
