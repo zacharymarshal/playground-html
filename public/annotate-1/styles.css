@@ -10,9 +10,35 @@ body {
   right: 0;
   margin: 16px;
   background: #f8f8f8;
-  border-bottom: 1px solid #e2e2e2;
-  padding: 16px;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
+  padding: 8px;
   z-index: 99999999;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.annotate-toolbar button,
+input {
+  width: 50px;
+}
+.annotate-toolbar button {
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-radius: 8px;
+}
+.annotate-toolbar button:hover {
+  background-color: #ededed;
+}
+.annotate-toolbar button:active {
+  background-color: #e8e8e8;
 }
 
 .draw {
