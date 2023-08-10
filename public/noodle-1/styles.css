@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --game-width: 256px;
+  --game-height: 352px;
+  --gameboard-width: 256px;
+  --gameboard-height: 256px;
+  --pixel-size: 1;
+}
+
+html,
+body {
+  font-size: 11px;
+  font-family: "Press Start 2P", cursive;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  image-rendering: pixelated;
+  user-select: none;
+}
+
+.game-container {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid red;
+}
+
+.game {
+  width: var(--game-width);
+  height: var(--game-height);
+  transform: scale(var(--pixel-size));
+
+  outline: 2px solid blue;
+}
+
+.gameboard {
+  width: var(--gameboard-width);
+  height: var(--gameboard-height);
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* debugging stuff */
+  /* background: url("images/center-lines.png") center center no-repeat; */
+  border: 2px solid green;
+}
+
+.camera-controls {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-controls__zoom,
+.camera-controls__move {
+  display: flex;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.camera-controls button {
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  border: 1px solid black !important;
+  box-shadow: 1px 1px black, 2px 2px white;
+  background: white;
+  color: black;
+  cursor: pointer;
+  user-select: none;
+}
+
+.camera-controls button:hover {
+  color: black;
+  background: white;
+}
+
+.camera-controls button:active {
+  background-color: white !important;
+  color: black !important;
+  box-shadow: 0px 0px white;
+  transform: translateX(2px) translateY(1px);
+}
+
+@media (min-width: 512px) and (min-height: 704px) {
+  :root {
+    --pixel-size: 2;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 1056px) {
+  :root {
+    --pixel-size: 3;
+  }
+}
