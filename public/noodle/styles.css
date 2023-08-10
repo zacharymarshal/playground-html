@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --game-width: 256px;
+  --game-height: 352px;
+  --gameboard-width: 256px;
+  --gameboard-height: 256px;
+  --pixel-size: 1;
+}
+
+html,
+body {
+  font-size: 11px;
+  font-family: "Press Start 2P", cursive;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.game-container {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid red;
+}
+
+.game {
+  width: var(--game-width);
+  height: var(--game-height);
+  transform: scale(var(--pixel-size));
+
+  outline: 2px solid blue;
+}
+
+.gameboard {
+  width: var(--gameboard-width);
+  height: var(--gameboard-height);
+
+  border: 2px solid green;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 512px) and (min-height: 704px) {
+  :root {
+    --pixel-size: 2;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 1056px) {
+  :root {
+    --pixel-size: 3;
+  }
+}
