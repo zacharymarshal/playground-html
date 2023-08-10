@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 16px;
+  font-family: "Press Start 2P", cursive;
+}
+
+.game-container {
+  border: 5px solid #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hammers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+
+button.hammer {
+  background: none;
+  border: 2px solid #000;
+  border-bottom: 8px solid;
+  border-right: 8px solid;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+button.hammer--is-active {
+  border-color: #db4324;
+}
+
+button.hammer img {
+  width: 32px;
+  pointer-events: none;
+}
+
+button.hammer--small {
+  border-bottom-width: 4px;
+  border-right-width: 4px;
+  padding: 0.5rem;
+}
+
+button.hammer--small img {
+  width: 16px;
+}
+
+button.hammer--medium {
+  border-bottom-width: 6px;
+  border-right-width: 6px;
+  padding: 0.75rem;
+}
+
+button.hammer--medium img {
+  width: 24px;
+}

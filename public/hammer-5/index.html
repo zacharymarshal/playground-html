@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>hammer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="hammers">
+        <button class="hammer hammer--small js-hammer" data-hammer-size="1">
+          <img src="images/hammer.png" alt="hammer" />
+        </button>
+        <button
+          class="hammer hammer--medium js-hammer"
+          data-hammer-size="2"
+          data-hammer-size-is-default
+        >
+          <img src="images/hammer.png" alt="hammer" />
+        </button>
+        <button class="hammer hammer--large js-hammer" data-hammer-size="3">
+          <img src="images/hammer.png" alt="hammer" />
+        </button>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
+    <img
+      src="images/hammer-down.png"
+      alt="hammer"
+      style="display: none"
+      id="img-hammer-down"
+    />
+  </body>
+</html>

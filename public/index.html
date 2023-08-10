@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <style>
+      body {
+        font-family: "Fira Code", monospace;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #282a36;
+          color: #f8f8f2;
+        }
+        textarea {
+          background-color: #282a36;
+          color: #f8f8f2;
+          border-color: #44475a;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>playground</h1>
+    <div
+      style="border: 1px solid #000; width: 100px; height: 100px; margin: 50px"
+    ></div>
+    <p>
+      <textarea id="editor" rows="20" cols="80"></textarea>
+    </p>
+    <p>
+      <input type="text" id="input" />
+    </p>
+    <p>
+      <input type="submit" id="submit" value="Run" />
+    </p>
+    <p>
+      <select>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+      </select>
+    </p>
+    <p>
+      <a href="#" id="click-event">Click me</a>
+    </p>
+    <p>
+      Eleifend aliquam lobortis maecenas varius. Cubilia nunc dui potenti
+      pulvinar elementum amet! Rutrum magna, laoreet ut. Eu facilisi nulla
+      egestas. Fermentum enim arcu cursus ornare molestie taciti eros et
+      suscipit nibh himenaeos. Cum vulputate viverra massa. Pellentesque congue
+      proin metus curae; ut suscipit imperdiet habitant. Vitae integer lectus
+      ornare tellus neque posuere penatibus consectetur curabitur pellentesque
+      congue ac. Nulla neque class orci, dignissim consectetur aptent nunc a
+      eget. Gravida vulputate ullamcorper elit malesuada.
+    </p>
+    <p>
+      Integer nibh aptent mi cubilia mi ullamcorper congue sagittis nisi. Urna
+      sapien parturient integer blandit ipsum purus fringilla. Vivamus penatibus
+      aenean potenti iaculis neque taciti. Sodales sapien primis semper cubilia
+      et morbi id enim mi! Metus eget nulla nostra! Eu sem elementum tincidunt
+      tempus malesuada ultricies pulvinar ad natoque torquent enim. Sit?
+    </p>
+    <p>
+      Quis duis consectetur vehicula auctor nostra convallis ultricies ligula
+      lorem. Curabitur facilisi ligula primis cursus, odio imperdiet?
+      Pellentesque mattis netus nisi euismod rutrum donec, ullamcorper morbi.
+      Ridiculus volutpat dapibus ante et augue? Nec vivamus varius malesuada
+      ridiculus condimentum inceptos consequat diam posuere lacus. Velit proin,
+      molestie integer. Volutpat sit tincidunt duis netus quisque netus ante.
+      Commodo platea augue tempor posuere imperdiet pretium sit at sit. Nascetur
+      quam platea phasellus nibh semper. Nisl sed convallis eget volutpat dui
+      orci ante arcu torquent phasellus! Odio morbi, libero.
+    </p>
+    <p>
+      Dictumst massa velit cum. Orci semper sit fermentum tellus, taciti ligula
+      lectus tempus viverra per turpis pretium. Posuere morbi taciti velit
+      nascetur et dictum nostra cum neque. Diam felis litora eu. A, suspendisse
+      ullamcorper varius curabitur aptent pharetra quisque ligula enim semper
+      facilisis. Tincidunt bibendum, nibh sagittis euismod taciti. Habitant
+      montes sollicitudin nascetur inceptos fringilla nullam vestibulum. Ad
+      morbi?
+    </p>
+    <p>
+      Pretium tristique mollis ultrices justo aptent conubia. Ad cras velit
+      vestibulum donec purus fringilla enim nisl etiam facilisi feugiat. Nulla
+      euismod dictum arcu adipiscing convallis curabitur faucibus gravida urna
+      blandit et. Ornare mauris nisl semper nostra dapibus, euismod bibendum
+      quisque nulla nec curabitur? Tempor quisque penatibus laoreet curae;
+      litora posuere tristique. Tellus habitant commodo pharetra vivamus lorem
+      per hac ligula quam. Dis ipsum class taciti!
+    </p>
+    <script>
+      window.addEventListener("click", () => {
+        console.log("clicked");
+      });
+      window.addEventListener("mousedown", () => {
+        console.log("mousedown");
+      });
+    </script>
+  </body>
+</html>

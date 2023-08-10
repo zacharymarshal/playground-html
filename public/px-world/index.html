@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game Animation Sprite 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <div id="stats" class="stats">
+      <div>FPS:</div>
+      <div id="fps"></div>
+    </div>
+    <div class="world-container">
+      <canvas
+        id="character"
+        class="character"
+        width="256"
+        height="256"
+      ></canvas>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <input type="radio" name="animations" id="idle" value="idle" checked />
+        <label for="idle">Idle Right</label>
+      </div>
+
+      <div class="control-group">
+        <input type="radio" name="animations" id="jump" value="jump" />
+        <label for="jump">Jump Right</label>
+      </div>
+
+      <div class="control-group">
+        <input type="radio" name="animations" id="attack" value="attack" />
+        <label for="attack">Attack Right</label>
+      </div>
+
+      <div class="control-group">
+        <input type="radio" name="animations" id="kneel" value="kneel" />
+        <label for="kneel">Kneel Right</label>
+      </div>
+
+      <div class="control-group">
+        <input type="radio" name="animations" id="walk" value="walk" />
+        <label for="walk">Walk Right</label>
+      </div>
+
+      <div class="control-group">
+        <input type="radio" name="animations" id="run" value="run" />
+        <label for="run">Run Right</label>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="control-group">
+        <label for="animation-fps">Animation FPS</label>
+        <input type="range" min="1" max="200" id="animation-fps" value="16" />
+      </div>
+    </div>
+  </body>
+</html>
