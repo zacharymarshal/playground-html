@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>noodle</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <div id="game">
+      <div id="loading" style="display: none">
+        <h1>Loading...</h1>
+        <div id="loading-progress" style="background-color: blue">&nbsp;</div>
+      </div>
+      <div id="title-screen" style="display: none">
+        <h1>noodle 🍜</h1>
+        <div>
+          <button data-play data-play-game-mode="SOLO">Solo</button>
+          <button data-play data-play-game-mode="MULTIPLAYER">
+            Multiplayer
+          </button>
+        </div>
+      </div>
+      <div id="lobby" style="display: none">
+        <h1>Lobby</h1>
+        <div id="lobby-game-mode"></div>
+        <h2>Players</h2>
+        <div id="lobby-player-list"></div>
+        <div>
+          <button id="lobby-add-ai">Add AI</button>
+        </div>
+        <hr />
+        <div>
+          <button id="lobby-start" disabled>Start</button>
+        </div>
+      </div>
+      <div id="play" style="display: none">
+        <h1>PLAY</h1>
+        <div>GAMEBOARD</div>
+        <div>
+          <button id="play-leave">Leave</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
