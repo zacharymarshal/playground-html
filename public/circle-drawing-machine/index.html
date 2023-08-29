@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>circle-drawing-machine</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/xstate@4/dist/xstate.js"></script>
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <div id="controls">
+      <button id="undo">Undo</button>
+      <button id="redo">Redo</button>
+
+      <input
+        type="range"
+        id="circle-radius-input"
+        min="0"
+        max="100"
+        step="5"
+        value="10"
+        disabled
+      />
+    </div>
+    <canvas id="canvas" width="350" height="350"></canvas>
+  </body>
+</html>

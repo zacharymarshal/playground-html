@@ -135,7 +135,6 @@ class GameStore {
     this.#reducer = reducer;
   }
   dispatch({ type, payload } = {}) {
-    console.log({ type, payload });
     if (payload === undefined) {
       payload = {};
     }

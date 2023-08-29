@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script type="module" src="main.js"></script>
+    <style>
+      button.active {
+        border: 2px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="state"></div>
+    <div id="title" style="display: none">
+      <h1>HAMMER TIME</h1>
+      <button onClick="game.start()">Start</button>
+    </div>
+    <div id="play" style="display: none">
+      <div>
+        <button onClick="game.changeSize('S')" data-size="S">Small</button>
+        <button onClick="game.changeSize('M')" data-size="M" class="active">
+          Medium
+        </button>
+        <button onClick="game.changeSize('L')" data-size="L">Large</button>
+      </div>
+      <div>
+        <button onClick="game.pause()">Pause</button>
+        <button onClick="game.resume()">Resume</button>
+      </div>
+
+      <div
+        id="hammer"
+        style="
+          position: absolute;
+          background: red;
+          width: 50px;
+          height: 50px;
+          border-radius: 1rem;
+          left: 250px;
+        "
+      ></div>
+    </div>
+  </body>
+</html>
